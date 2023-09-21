@@ -1,60 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <title>Document</title>
 </head>
+
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor" aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarColor">
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item">
-                <a class="nav-link active" href="index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contacts</a>
-              </li>
-            </ul>
-            <form class="d-flex">
-              <input class="form-control me-sm-2" type="search" placeholder="Search">
-              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor"
+        aria-controls="navbarColor" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarColor">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contacts</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-sm-2" type="search" placeholder="Search">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!--Container-->
+  <div class="container" id="app">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="user-list">
+        <!-- Les données des utilisateurs seront affichées ici -->
+      </tbody>
+    </table>
+    <div class="modal fade" id="modal-edit-user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="edit-name">
+                Nom:
+              </label>
+              <input type="text" class="form-control" id="edit-name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="edit-email">
+                Email:
+              </label>
+              <input type="email" class="form-control" id="edit-email" name="email" required>
+            </div>
+            <input type="hidden" name="user-id-to-edit" id="user-id-to-edit" value="0">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="save()">Enregistrer</button>
           </div>
         </div>
-      </nav>
-
-      <!--Container-->
-      <div class="container" id="app">
-        <table class="table table-striped">
-          <thead>
-              <tr>
-                  <th>ID</th>
-                  <th>Nom</th>
-                  <th>Email</th>
-                  <th>Actions</th>
-              </tr>
-          </thead>
-          <tbody id="user-list">
-              <!-- Les données des utilisateurs seront affichées ici -->
-          </tbody>
-      </table>
-      
-      <a href="" class="btn btn-success d-block">Ajouter</a>
+      </div>
+    </div>
+    <a href="" class="btn btn-success d-block">Ajouter</a>
   </div>
-    
 
 
 
 
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js" ></script>
-    <script type="text/javascript" src="app.js" ></script>
+
+  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="_app.js"></script>
+  <!-- <script type="text/javascript" src="api.js"></script>-->
 
 </body>
+
 </html>
+
+<script>
+  function init() {
+    fetchAndDisplayUsers();
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+
+    init()
+
+  });
+</script>

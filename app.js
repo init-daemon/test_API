@@ -1,8 +1,8 @@
 function fetchAndDisplayUsers() {
-    
+
     fetch('https://jsonplaceholder.typicode.com/users')
         .then(response => response.json())
-        .then(data => {            
+        .then(data => {
             const users = data;
             for (const user of users) {
                 addUserToTable(user);
@@ -24,81 +24,78 @@ function addUserToTable(user) {
         <td>${user.name}</td>
         <td>${user.email}</td>
         <td>
-            <button class="btn btn-primary btn-sm" onclick="editUser(${user.id})">Modifier</button>
+            <button class="btn btn-primary btn-sm" onclick="editUser(${user.id})" data-bs-target="#modal-edit-user" data-bs-toggle="modal">Modifier</button>
             <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">Supprimer</button>
         </td>
     `;
 }
 
 
-const getUserDataById = async function (){
-    try{
+const getUserDataById = async function () {
+    const data = null;
+    try {
         let response = await fetch('https://jsonplaceholder.typicode.com/users/1')
-        if (response.ok){
-            let data = await response.json()
-            console.log(data)
-        } else{
+        if (response.ok) {
+            let data = await response.json();
+        } else {
             console.error('retour du server:', response.status)
         }
-    } catch(e) {
+    } catch (e) {
         console.log(e)
     }
     return data
 }
 
 //modification des données 
-function editUser(userId) {
-    
-    const userToEdit = getUserDataById(userId);
+async function editUser(userId) {
 
-    if (!userToEdit) {
-        
-        console.error("Utilisateur non trouvé");
-        return;
-    }
-    
-    document.getElementById("edit-name").value = userToEdit.name;
-    document.getElementById("edit-email").value = userToEdit.email;
-    document.getElementById("edit-user").style.display = "block";
+    const userToEdit = await getUserDataById(userId)
+        .then(d => {
+            console.log("d", d)
+            document.getElementById("edit-name").value = d.name;
+            document.getElementById("edit-email").value = d.email;
+        })
+        .catch(e => console.error(e));
+    console.log("userToEdit", userToEdit)
 }
 
 
 //supprimer utilisateur
 function deleteUser(userId) {
-    
+
 }
 
 //ajout d'utilisateur au tableau
-addUserToTable(userData);
+// addUserToTable(userData);
 
-document.getElementById("add-user").addEventListener("submit", function (event) {
-    event.preventDefault(); 
+// document.getElementById("add-user").addEventListener("submit", function (event) {
+//     event.preventDefault();
 
-   
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
 
-    const newUser = {
-        name: name,
-        email: email,
- 
-    };
+//     const name = document.getElementById("name").value;
+//     const email = document.getElementById("email").value;
 
-    fetch('https://jsonplaceholder.typicode.com/users', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newUser),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Nouvel utilisateur ajouté:', data);
+//     const newUser = {
+//         name: name,
+//         email: email,
 
-        document.getElementById("add-user").reset();
-    })
-    .catch(error => {
-        console.error('Erreur lors de l\'ajout de l\'utilisateur', error);
-    });
-});
+//     };
+
+//     fetch('https://jsonplaceholder.typicode.com/users', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(newUser),
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             console.log('Nouvel utilisateur ajouté:', data);
+
+//             document.getElementById("add-user").reset();
+//         })
+//         .catch(error => {
+//             console.error('Erreur lors de l\'ajout de l\'utilisateur', error);
+//         });
+// });
 
